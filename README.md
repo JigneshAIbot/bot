@@ -1,7 +1,7 @@
 # bot
-**********************This is an official commands that can be used to operate the dreamnoid**************************
+This is an official commands that can be used to operate the dreamnoid
 
-***************************---------------------------------Created by: Rishit Mavani----------------------------------------**************************************
+---------------------------------Created by: Rishit Mavani----------------------------------------
 
 
 *********keywords that should be in the sentence to use the operation*********** 
@@ -17,10 +17,7 @@ Keywords:
 					   3. discord
 					   4. spotify
 					   5. pycharm
-					   6. csgo
-							
-	
-						}
+					   6. csgo}
 3) 'open / browse' - to open youtube.com, google.com, stackoverflow, etc.
 4) 'weather / teamperature' + 'city name' - to get weather related news.
 5) 'manual / notes / commands' - to open this file.
