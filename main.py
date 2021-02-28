@@ -21,7 +21,7 @@ import pywhatkit as kit
 from requests import get
 from lsHotword import ls
 
-name = "Jignesh"
+name = "Jignaass"
 obj = JarvisAI.JarvisAssistant()
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -32,6 +32,17 @@ starting = ["Hello!", "Hey!", "How are you?", "How's day going?"]
 greetings = ["Your welcome sir!", "Happy to help you sir", "Here for you anytime!"]
 goodbyes = ["See you soon!", "Have a great day!", "Good bye", "Bye-Bye", "Cya"]
 prefix = ["Hold on,", "Alright,", "Hang on,", "Okay sir,"]
+
+
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 def speak(audio):
@@ -65,7 +76,7 @@ def takeCommand():
     try:
         print("Recognizing...")
         query = r.recognize_google(audio, language='en-in')
-        print(f"You said: {query.lower()}\n")
+        # print(f"You said: {query.lower()}\n")
 
     except Exception:
         speak("I couldn't understand it, say that again sir.....")
@@ -121,23 +132,23 @@ def Tasks():
             if 'currency' in query or 'money' in query:
                 speak("say initials of which currency you want to convert")
                 base = takeCommand().upper()
-                print(base)
+                # print(base)
                 speak("say initials of in which you want to convert")
                 con = takeCommand().upper()
-                print(con)
+                # print(con)
                 speak("how much amount you want to convert? sir")
                 amount = takeCommand()
-                print(amount)
+                # print(amount)
                 url = 'https://api.exchangerate-api.com/v4/latest/USD'
                 converter = CurrencyConverter(url)
                 conamount = converter.convert(base, con, int(amount))
-                print(conamount)
+                # print(conamount)
                 speak("After converting the amount is " + str(conamount))
 
         elif 'calculate' in query:
             speak("Which method you want to calculate in, sir?")
             method = takeCommand().lower()
-            print(method)
+            # print(method)
             if 'sum' in query or 'addition' in query:
                 speak("Say the first value sir!")
                 fvalue = float(takeCommand())
@@ -145,7 +156,7 @@ def Tasks():
                 svalue = float(takeCommand())
                 finalvalue = fvalue + svalue
                 speak(f"Sum of {str(fvalue)} + {str(svalue)} is {str(finalvalue)}")
-                print(finalvalue)
+                # print(finalvalue)
             elif 'multiply' in query:
                 speak("Say the first value sir!")
                 fvalue = float(takeCommand())
@@ -153,7 +164,7 @@ def Tasks():
                 svalue = float(takeCommand())
                 finalvalue = fvalue * svalue
                 speak(f"Multiplication of {str(fvalue)} into {str(svalue)} is {str(finalvalue)}")
-                print(finalvalue)
+                # print(finalvalue)
             elif 'divide' in query or 'division' in query:
                 speak("Say the first value sir!")
                 fvalue = float(takeCommand())
@@ -161,7 +172,7 @@ def Tasks():
                 svalue = float(takeCommand())
                 finalvalue = fvalue / svalue
                 speak(f"Division of {str(fvalue)} by {str(svalue)} is {str(finalvalue)}")
-                print(finalvalue)
+                # print(finalvalue)
             elif 'subtraction' in query or 'subtract' in query or 'minus' in query:
                 speak("Say the first value sir!")
                 fvalue = float(takeCommand())
@@ -169,7 +180,7 @@ def Tasks():
                 svalue = float(takeCommand())
                 finalvalue = fvalue - svalue
                 speak(f"By Subtracting {str(fvalue)} from {str(svalue)}, remaining digits is {str(finalvalue)}")
-                print(finalvalue)
+                # print(finalvalue)
             else:
                 speak("Sorry I couldn't understand it sir!")
 
@@ -181,15 +192,15 @@ def Tasks():
                 detect = query.lower()
                 # detect = 'tumhara name kya hai'
                 blob = TextBlob(u'' + detect)
-                print(blob.detect_language())
+                # print(blob.detect_language())
                 speak("Language detected!")
                 speak("Translating to english sir.")
-                print(blob.translate(to='en'))
+                # print(blob.translate(to='en'))
                 speak(blob.translate(to='en'))
             elif ans == 'no' or ans == 'don\'t':
                 speak("from which language I need to translate from sir?")
                 lan = takeCommand().lower()
-                print(lan)
+                # print(lan)
                 speak("start speaking to translate!")
                 trans = takeCommand().lower()
                 blob = TextBlob(u'' + trans)
@@ -225,7 +236,7 @@ def Tasks():
         elif 'to follow' in query:
             speak("without a doubt sir!")
 
-        elif 'nothing' in query or 'anything for right now' in query:
+        elif 'nothing' in query or 'nothing for right now' in query or 'no work' in query:
             speak("Alright, sir ask me whenever you need.")
 
         elif 'search online' in query:
@@ -282,12 +293,8 @@ def Tasks():
             rawup = st.upload()
             roundedspeedup = round(rawup)
             finalup = format(roundedspeedup / 1e+6, ".2f")
-            print(
-                f"We have {finaldl} mega bytes per second downloading speed and {finalup} mega bytes per second "
-                f"uploading speed")
-            speak(
-                f"We have {finaldl} mega bytes per second downloading speed and {finalup} mega bytes per second "
-                f"uploading speed")
+            # print(f"We have {finaldl} mega bytes per second downloading speed and {finalup} mega bytes per second uploading speed")
+            speak(f"We have {finaldl} mega bytes per second downloading speed and {finalup} mega bytes per second uploading speed")
 
         elif 'on youtube' in query:
             speak("What should i play")
@@ -379,7 +386,7 @@ def Tasks():
             else:
                 pass
 
-        elif "restart the computer" in query:
+        elif "restart" in query:
             if 'pc' in query or 'computer' in query or 'system' in query:
                 prefixran = random.choice(prefix)
                 speak("Are you sure you want to shutdown sir? say yes if you want cutoff the system.")
@@ -397,12 +404,12 @@ def Tasks():
             a = int(takeCommand())
             speak("I will not be listening for next" + str(a) + "seconds.")
             time.sleep(a)
-            print(a)
+            # print(a)
 
         elif re.search('manual | notes | commands', query):
             speak("Showing Notes")
-            file = open("jarvis.txt", "r")
-            print(file.read())
+            file = open("jigneshAIbot.txt", "r")
+            # print(file.read())
             speak(file.read(6))
 
         elif 'play music' in query:
@@ -431,7 +438,7 @@ def Tasks():
                 sendEmail(to, content)
                 speak("Email sent successfully")
             except Exception as e:
-                print(e)
+                # print(e)
                 speak("Sorry, I am not able to send this email for some reasons.")
 
         elif 'trace ip' in query or 'find ip' in query or 'locate ip' in query:
@@ -451,7 +458,7 @@ def Tasks():
                 speak(str(response.location.latitude) + "and   ")
                 speak(str(response.location.longitude) + "Respectively")
             except Exception:
-                print(f"Say that again sir, couldn't trace the ip {ip}.")
+                # print(f"Say that again sir, couldn't trace the ip {ip}.")
                 ip = takeCommand()
                 return "None"
 
@@ -478,7 +485,7 @@ def Tasks():
             break
 
         def wakeLoop():
-            print("say hey rim to activate again")
+            print("say hey jignesh to activate again")
             ls.lsHotword_loop()
             Tasks()
 
@@ -494,7 +501,7 @@ if __name__ == "__main__":
     entry = tk.Entry(window, textvariable=entry_var)
     entry.pack()
 
-    print(entry_var.get())
+    # print(entry_var.get())
 
 
     def activate():
@@ -510,7 +517,7 @@ if __name__ == "__main__":
             button_1.pack(pady=10)
             speak("Registered as " + var)
             speak(start + "sir, Click button to activate your personal assistant Jiggnnass!")
-            print(f"Registered, as {var}")
+            # print(f"Registered, as {var}")
 
 
     label_name = tk.Label(
@@ -522,7 +529,7 @@ if __name__ == "__main__":
 
     def start():
         while True:
-            print("Say, hey jignesh or ai jignesh")
+            # print("Say, hey jignesh or ai jignesh")
             ls.lsHotword_loop()
             # query = takeCommand().lower()
             permission = "wake up"
@@ -536,7 +543,7 @@ if __name__ == "__main__":
 
     def handle_click():
         window.destroy()
-        print("Activated!")
+        # print("Activated!")
         speak("Activated")
         speak("Say, hey jignesh to power-up your assistant!")
         start()
@@ -553,7 +560,7 @@ if __name__ == "__main__":
 
     def manual():
         speak("Opening manual!")
-        os.startfile("jarvis.txt")
+        os.startfile("jigneshAIbot.txt.txt")
 
 
     button_manual = tk.Button(
